@@ -1,7 +1,10 @@
 import { useState, useEffect } from "react";
 import "./App.css";
 
-import Search from "./components/search.tsx";
+import Search from "./components/Search.tsx";
+import Spinner from "./components/Spinner.tsx";
+import MovieCard from "./components/MovieCard.tsx";
+import Movie from "./types/movie.interface.ts";
 
 const API_BASE_URL = "https://api.themoviedb.org/3";
 const API_KEY = import.meta.env.VITE_ACCESS_TOKEN;
@@ -12,23 +15,6 @@ const API_OPTIONS = {
     Authorization: `Bearer ${API_KEY}`,
   },
 };
-
-interface Movie {
-  adult: boolean;
-  backdrop_path: string;
-  genre_ids: Array<number>;
-  id: number;
-  original_language: string;
-  original_title: string;
-  overview: string;
-  popularity: number;
-  poster_path: string;
-  release_date: string;
-  title: string;
-  video: boolean;
-  vote_average: number;
-  vote_count: number;
-}
 
 function App() {
   const [searchTerm, setSearchTerm] = useState("");
@@ -83,19 +69,16 @@ function App() {
           </header>
 
           <section className="all-movies">
-            <h2>All Movies</h2>
+            <h2 className="mt-[40px]">All Movies</h2>
             {errorMessage && <p className="text-red-500">{errorMessage}</p>}
             {isLoading ? (
-              <p className="text-white"> Loading... </p>
+              <Spinner />
             ) : errorMessage ? (
               <p className="text-red">{errorMessage}</p>
             ) : (
               <ul>
                 {movieList.map((movie) => (
-                  <li className="text-white" key={movie.id}>
-                    {" "}
-                    {movie.title}
-                  </li>
+                  <MovieCard key={movie.id} movie={movie} />
                 ))}
               </ul>
             )}
