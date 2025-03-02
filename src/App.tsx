@@ -92,7 +92,10 @@ function App() {
             ) : (
               <ul>
                 {movieList.map((movie) => (
-                  <li key={movie.id}> {movie.title}</li>
+                  <li className="text-white" key={movie.id}>
+                    {" "}
+                    {movie.title}
+                  </li>
                 ))}
               </ul>
             )}
